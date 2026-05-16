@@ -195,41 +195,50 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F3F0] flex justify-center font-sans text-zinc-800">
+    <div className="min-h-screen bg-gradient-to-br from-blue-200 via-blue-50 to-indigo-100 flex justify-center font-sans text-slate-800">
+      
+      {/* Círculos decorativos de background para potencializar o Glassmorphism */}
+      <div className="fixed top-[-10%] left-[-10%] w-[300px] h-[300px] bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 pointer-events-none"></div>
+      <div className="fixed top-[40%] right-[-10%] w-[400px] h-[400px] bg-indigo-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none"></div>
+      <div className="fixed bottom-[-10%] left-[20%] w-[350px] h-[350px] bg-cyan-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 pointer-events-none"></div>
+
       {/* Mobile App Container */}
-      <div className="w-full max-w-md relative flex flex-col h-screen overflow-hidden">
+      <div className="w-full max-w-md relative flex flex-col h-screen overflow-hidden z-10">
         
-        {/* Header Vibe Design */}
-        <header className="pt-8 pb-4 px-6 shrink-0 relative z-30">
-          <div className="flex justify-between items-center">
+        {/* Header Glassmorphism */}
+        <header className="pt-6 px-4 pb-2 shrink-0 relative z-30">
+          <div className="bg-white/60 backdrop-blur-xl border border-white/50 shadow-[0_8px_32px_rgba(30,58,138,0.08)] rounded-[32px] p-5 flex justify-between items-center">
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-1">Restaurante</p>
-              <h1 className="text-3xl font-serif italic font-black text-zinc-900 tracking-tight leading-none">do Jânio</h1>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-blue-600/80 mb-0.5">Restaurante</p>
+              <h1 className="text-3xl font-serif italic font-black text-blue-950 tracking-tight leading-none">do Jânio</h1>
             </div>
-            <div className="bg-white rounded-2xl p-2 px-3 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col items-center min-w-[72px]">
-              <span className="text-[9px] font-bold uppercase tracking-wider text-zinc-400">Mesa</span>
+            <div className="bg-white/70 backdrop-blur-md rounded-[20px] p-2 px-3 shadow-inner border border-white/60 flex flex-col items-center min-w-[72px]">
+              <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Mesa</span>
               <input 
                 type="text" 
                 value={table}
                 onChange={(e) => setTable(e.target.value)}
-                className="w-full text-center text-xl font-black text-orange-500 bg-transparent outline-none mt-0.5"
+                className="w-full text-center text-xl font-black text-blue-700 bg-transparent outline-none mt-0.5 placeholder-slate-300"
                 maxLength="3"
+                placeholder="00"
               />
             </div>
           </div>
         </header>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto px-6 pb-40 hide-scrollbar">
+        <div className="flex-1 overflow-y-auto px-4 pb-48 hide-scrollbar">
           {MENU.map((category, idx) => (
-            <div key={idx} className="mb-10">
+            <div key={idx} className="mb-8 mt-4">
               {/* Category Header */}
-              <div className="mb-4 flex items-center">
-                <span className="font-bold tracking-widest text-[11px] uppercase text-zinc-400">{category.category}</span>
+              <div className="mb-4 text-center">
+                <span className="inline-block bg-white/40 backdrop-blur-md border border-white/50 shadow-[0_4px_16px_rgba(0,0,0,0.03)] px-4 py-1.5 rounded-full font-bold tracking-widest text-[10px] uppercase text-blue-800">
+                  {category.category}
+                </span>
               </div>
               
-              {/* Items List - Vibe Design Cards */}
-              <div className="flex flex-col gap-4">
+              {/* Items List - Glass Cards */}
+              <div className="flex flex-col gap-3">
                 {category.items.map((item) => {
                   const quantity = order[item.id] || 0;
                   const isSelected = quantity > 0;
@@ -237,50 +246,50 @@ export default function App() {
                   return (
                     <div 
                       key={item.id} 
-                      className={`bg-white rounded-[28px] p-5 shadow-[0_8px_20px_rgb(0,0,0,0.03)] transition-all duration-300
-                        ${!item.available ? 'opacity-60 grayscale-[0.2]' : isSelected ? 'ring-2 ring-orange-500/20' : 'hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)]'}`}
+                      className={`bg-white/60 backdrop-blur-lg border border-white/60 rounded-[28px] p-4 shadow-[0_8px_32px_rgba(30,58,138,0.04)] transition-all duration-300
+                        ${!item.available ? 'opacity-50 grayscale-[0.3]' : isSelected ? 'ring-2 ring-blue-400/40 bg-white/80' : 'hover:shadow-[0_12px_40px_rgba(30,58,138,0.08)]'}`}
                     >
-                      <div className="flex justify-between items-start mb-3">
-                        <div className="flex-1 pr-4">
-                          <h3 className={`text-[15px] leading-tight font-black ${isSelected ? 'text-zinc-900' : 'text-zinc-800'}`}>
+                      <div className="flex justify-between items-center">
+                        <div className="flex-1 pr-3">
+                          <h3 className={`text-[15px] leading-tight font-black ${isSelected ? 'text-blue-950' : 'text-slate-800'}`}>
                             {item.name}
                           </h3>
                           {item.available ? (
-                            <p className="text-[13px] mt-1.5 font-bold text-orange-500">
+                            <p className="text-[14px] mt-1 font-bold text-blue-700">
                               {formatPrice(item.price)}
                             </p>
                           ) : (
-                            <div className="mt-2 inline-block bg-zinc-100 text-zinc-500 text-[10px] uppercase font-bold tracking-wider py-1 px-2 rounded-full">
+                            <div className="mt-2 inline-block bg-slate-200/50 backdrop-blur-sm border border-slate-300/30 text-slate-500 text-[9px] uppercase font-bold tracking-wider py-1 px-2.5 rounded-full">
                               Indisponível
                             </div>
                           )}
                         </div>
-                      </div>
-                      
-                      {/* Controls - Vibe Pill */}
-                      <div className="flex justify-end">
-                        <div className={`flex items-center space-x-1 p-1 rounded-full ${!item.available ? 'bg-zinc-100/50' : 'bg-zinc-100'}`}>
-                          <button 
-                            onClick={() => updateQuantity(item.id, -1)}
-                            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 
-                              ${!item.available ? 'text-zinc-300 cursor-not-allowed' : quantity > 0 ? 'bg-white text-zinc-900 shadow-sm' : 'text-zinc-400 cursor-not-allowed'}`}
-                            disabled={quantity === 0 || !item.available}
-                          >
-                            <Minus className="w-4 h-4" strokeWidth={3} />
-                          </button>
-                          
-                          <span className={`w-6 text-center text-sm font-black ${!item.available ? 'text-zinc-300' : 'text-zinc-900'}`}>
-                            {quantity}
-                          </span>
-                          
-                          <button 
-                            onClick={() => updateQuantity(item.id, 1)}
-                            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200
-                              ${!item.available ? 'text-zinc-300 cursor-not-allowed' : 'bg-zinc-900 text-white shadow-sm hover:scale-105 active:scale-95'}`}
-                            disabled={!item.available}
-                          >
-                            <Plus className="w-4 h-4" strokeWidth={3} />
-                          </button>
+                        
+                        {/* Controls - Glass Pill */}
+                        <div className="shrink-0">
+                          <div className={`flex items-center space-x-1 p-1 rounded-full border border-white/60 shadow-inner ${!item.available ? 'bg-slate-100/30' : 'bg-white/50 backdrop-blur-sm'}`}>
+                            <button 
+                              onClick={() => updateQuantity(item.id, -1)}
+                              className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 
+                                ${!item.available ? 'text-slate-300 cursor-not-allowed' : quantity > 0 ? 'bg-white text-slate-700 shadow-[0_2px_10px_rgba(0,0,0,0.05)]' : 'text-slate-400 cursor-not-allowed'}`}
+                              disabled={quantity === 0 || !item.available}
+                            >
+                              <Minus className="w-4 h-4" strokeWidth={2.5} />
+                            </button>
+                            
+                            <span className={`w-5 text-center text-sm font-black ${!item.available ? 'text-slate-300' : 'text-slate-800'}`}>
+                              {quantity}
+                            </span>
+                            
+                            <button 
+                              onClick={() => updateQuantity(item.id, 1)}
+                              className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200
+                                ${!item.available ? 'text-slate-300 cursor-not-allowed' : 'bg-blue-600 text-white shadow-[0_4px_12px_rgba(37,99,235,0.3)] hover:scale-105 active:scale-95'}`}
+                              disabled={!item.available}
+                            >
+                              <Plus className="w-4 h-4" strokeWidth={2.5} />
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -291,43 +300,43 @@ export default function App() {
           ))}
 
           {/* Aviso Importante no final do cardápio */}
-          <div className="mb-12 p-6 bg-white rounded-[32px] flex flex-col items-center justify-center text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-            <Utensils className="w-6 h-6 text-orange-400 mb-3" strokeWidth={1.5} />
-            <span className="font-bold text-zinc-400 tracking-widest uppercase text-[10px]">Aviso</span>
-            <span className="font-serif italic text-zinc-800 font-bold text-lg mt-1">"PF e Marmitex Bem Servido!"</span>
+          <div className="mb-4 mt-8 p-6 bg-white/50 backdrop-blur-md border border-white/60 rounded-[32px] flex flex-col items-center justify-center text-center shadow-[0_8px_32px_rgba(30,58,138,0.04)]">
+            <Utensils className="w-6 h-6 text-blue-500 mb-2" strokeWidth={1.5} />
+            <span className="font-bold text-slate-400 tracking-widest uppercase text-[10px]">Aviso</span>
+            <span className="font-serif italic text-blue-900 font-bold text-lg mt-1">"PF e Marmitex Bem Servido!"</span>
           </div>
 
         </div>
 
-        {/* Rodapé Flutuante Vibe Design */}
-        <div className="absolute bottom-6 left-0 right-0 px-6 z-20 flex flex-col pointer-events-none">
+        {/* Rodapé Flutuante Glassmorphism */}
+        <div className="absolute bottom-6 left-0 right-0 px-4 z-40 flex flex-col pointer-events-none">
           
           {/* Barra de Totais Visível */}
           {totalItems > 0 && (
             <div 
               onClick={() => setIsCartOpen(true)}
-              className="bg-orange-500 text-white rounded-3xl p-4 mb-4 shadow-[0_8px_30px_rgba(232,123,81,0.3)] flex justify-between items-center cursor-pointer pointer-events-auto active:scale-95 transition-transform duration-300"
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white border border-white/20 rounded-[28px] p-4 mb-4 shadow-[0_12px_32px_rgba(37,99,235,0.3)] backdrop-blur-md flex justify-between items-center cursor-pointer pointer-events-auto active:scale-95 transition-all duration-300"
             >
               <div>
-                <p className="text-[10px] font-bold tracking-widest uppercase text-white/80 mb-0.5">Total (Mesa {table || '?'})</p>
-                <p className="text-xl font-black leading-none">{formatPrice(totalAmount)}</p>
+                <p className="text-[10px] font-bold tracking-widest uppercase text-blue-100 mb-0.5 drop-shadow-sm">Total (Mesa {table || '?'})</p>
+                <p className="text-xl font-black leading-none drop-shadow-md">{formatPrice(totalAmount)}</p>
               </div>
-              <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+              <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-lg border border-white/10 px-4 py-2 rounded-full shadow-inner">
                 <span className="text-xs font-bold text-white tracking-wide">
                   Ver Comanda
                 </span>
-                <ChevronRight className="w-4 h-4 text-white" strokeWidth={3} />
+                <ChevronRight className="w-4 h-4 text-white" strokeWidth={2.5} />
               </div>
             </div>
           )}
 
           {/* Menu de Navegação Inferior */}
-          <nav className="bg-zinc-900 text-zinc-400 rounded-[32px] p-2 flex justify-between items-center shadow-2xl pointer-events-auto backdrop-blur-md">
+          <nav className="bg-white/70 backdrop-blur-xl border border-white/60 text-slate-500 rounded-[32px] p-2 flex justify-between items-center shadow-[0_16px_40px_rgba(30,58,138,0.1)] pointer-events-auto">
             <a 
               href="https://maps.app.goo.gl/VXJdMDwifi6PBTyT6" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="flex flex-col items-center justify-center w-1/3 py-3 hover:text-white transition-colors"
+              className="flex flex-col items-center justify-center w-1/3 py-2 hover:text-blue-600 transition-colors"
             >
               <MapPin className="w-6 h-6 mb-1" strokeWidth={1.5} />
               <span className="text-[9px] font-bold uppercase tracking-wider">Local</span>
@@ -335,12 +344,12 @@ export default function App() {
 
             <button 
               onClick={() => setIsCartOpen(true)} 
-              className={`flex flex-col items-center justify-center w-1/3 py-3 relative transition-colors ${totalItems > 0 ? 'text-white' : 'hover:text-white'}`}
+              className={`flex flex-col items-center justify-center w-1/3 py-2 relative transition-colors ${totalItems > 0 ? 'text-blue-600' : 'hover:text-blue-600'}`}
             >
-              <Receipt className={`w-6 h-6 mb-1 ${totalItems > 0 ? 'text-orange-500' : ''}`} strokeWidth={1.5} />
+              <Receipt className={`w-6 h-6 mb-1 ${totalItems > 0 ? 'text-blue-600' : ''}`} strokeWidth={1.5} />
               <span className="text-[9px] font-bold uppercase tracking-wider">Comanda</span>
               {totalItems > 0 && (
-                <span className="absolute top-2 right-[25%] bg-orange-500 text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center animate-pulse">
+                <span className="absolute top-1 right-[25%] bg-indigo-500 text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center animate-pulse shadow-md border border-white/50">
                   {totalItems}
                 </span>
               )}
@@ -350,7 +359,7 @@ export default function App() {
               href="https://wa.me/5565992576461" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="flex flex-col items-center justify-center w-1/3 py-3 hover:text-white transition-colors"
+              className="flex flex-col items-center justify-center w-1/3 py-2 hover:text-green-500 transition-colors"
             >
               <MessageCircle className="w-6 h-6 mb-1" strokeWidth={1.5} />
               <span className="text-[9px] font-bold uppercase tracking-wider">WhatsApp</span>
@@ -360,48 +369,49 @@ export default function App() {
 
         {/* Modal da Comanda / Carrinho */}
         {isCartOpen && (
-          <div className="absolute inset-0 z-50 flex flex-col bg-[#F5F3F0] animate-in slide-in-from-bottom-full duration-300">
-            <header className="pt-8 pb-4 px-6 shrink-0 relative flex justify-between items-center bg-[#F5F3F0]">
+          <div className="absolute inset-0 z-50 flex flex-col bg-slate-50/90 backdrop-blur-3xl animate-in slide-in-from-bottom-full duration-300">
+            <header className="pt-8 pb-4 px-6 shrink-0 relative flex justify-between items-center border-b border-white/50 bg-white/40 shadow-sm">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm">
-                  <Receipt className="w-5 h-5 text-zinc-900" strokeWidth={2} />
+                <div className="w-10 h-10 bg-white rounded-[14px] flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.05)] border border-white/60">
+                  <Receipt className="w-5 h-5 text-blue-600" strokeWidth={2} />
                 </div>
-                <h2 className="text-xl font-black text-zinc-900 tracking-tight">Comanda</h2>
+                <h2 className="text-xl font-black text-slate-800 tracking-tight">Sua Comanda</h2>
               </div>
               <button 
                 onClick={() => setIsCartOpen(false)}
-                className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm text-zinc-400 hover:text-zinc-900 transition-colors"
+                className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm text-slate-400 hover:text-slate-800 border border-white/60 transition-colors"
               >
                 <X className="w-5 h-5" strokeWidth={2.5} />
               </button>
             </header>
 
-            <div className="flex-1 overflow-y-auto px-6 pb-32 hide-scrollbar">
-              <div className="bg-white rounded-[32px] p-6 shadow-[0_8px_30px_rgb(0,0,0,0.03)] relative overflow-hidden mt-2">
+            <div className="flex-1 overflow-y-auto px-6 pb-32 hide-scrollbar relative">
+              <div className="bg-white/70 backdrop-blur-xl border border-white/60 rounded-[32px] p-6 shadow-[0_16px_40px_rgba(30,58,138,0.05)] relative overflow-hidden mt-6">
+                
                 <div className="text-center mb-8">
-                  <h3 className="font-serif italic text-3xl font-black text-zinc-900 tracking-tight">do Jânio</h3>
-                  <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-1">Conferência de Pedido</p>
-                  <div className="mt-4 inline-block bg-orange-50 text-orange-600 font-black px-4 py-1.5 rounded-full text-sm">
+                  <h3 className="font-serif italic text-3xl font-black text-blue-950 tracking-tight">do Jânio</h3>
+                  <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mt-1">Conferência de Pedido</p>
+                  <div className="mt-4 inline-block bg-blue-50/80 backdrop-blur-sm border border-blue-100 text-blue-700 font-black px-4 py-1.5 rounded-full text-sm shadow-sm">
                     Mesa {table}
                   </div>
                 </div>
 
                 {cartItems.length === 0 ? (
                   <div className="text-center py-10">
-                    <div className="w-16 h-16 bg-zinc-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <ShoppingCart className="w-8 h-8 text-zinc-300" strokeWidth={1.5} />
+                    <div className="w-16 h-16 bg-white/50 border border-white/60 shadow-inner rounded-[20px] flex items-center justify-center mx-auto mb-4">
+                      <ShoppingCart className="w-8 h-8 text-slate-300" strokeWidth={1.5} />
                     </div>
-                    <p className="text-zinc-400 font-medium">Sua comanda está vazia.</p>
+                    <p className="text-slate-400 font-medium">Sua comanda está vazia.</p>
                   </div>
                 ) : (
-                  <div className="space-y-5">
+                  <div className="space-y-4">
                     {cartItems.map((item, idx) => (
-                      <div key={idx} className="flex justify-between items-start text-sm group">
-                        <div className="flex-1">
-                          <span className="font-black text-zinc-900 bg-zinc-100 px-2 py-0.5 rounded-lg text-xs mr-3 inline-block min-w-[28px] text-center">{item.quantity}x</span>
-                          <span className="text-zinc-700 font-bold leading-tight">{item.name}</span>
+                      <div key={idx} className="flex justify-between items-center text-sm group p-2 rounded-xl hover:bg-white/40 transition-colors">
+                        <div className="flex-1 flex items-center">
+                          <span className="font-black text-blue-800 bg-blue-100/50 border border-blue-200/50 px-2 py-1 rounded-lg text-xs mr-3 inline-block min-w-[28px] text-center">{item.quantity}x</span>
+                          <span className="text-slate-700 font-bold leading-tight">{item.name}</span>
                         </div>
-                        <span className="font-black text-zinc-900 mt-0.5">
+                        <span className="font-black text-slate-800">
                           {formatPrice(item.price * item.quantity)}
                         </span>
                       </div>
@@ -409,39 +419,39 @@ export default function App() {
                   </div>
                 )}
 
-                <div className="mt-8 pt-6 border-t border-dashed border-zinc-200 flex justify-between items-end">
-                  <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-1">A Pagar</span>
-                  <span className="text-3xl font-black text-orange-500 leading-none">{formatPrice(totalAmount)}</span>
+                <div className="mt-8 pt-6 border-t border-dashed border-slate-300 flex justify-between items-end">
+                  <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">A Pagar</span>
+                  <span className="text-3xl font-black text-blue-600 leading-none">{formatPrice(totalAmount)}</span>
                 </div>
 
                 {/* Secção PIX com Gerador Real */}
                 {totalAmount > 0 && (
-                  <div className="mt-8 bg-zinc-900 p-5 rounded-[24px] flex flex-col items-center relative overflow-hidden">
+                  <div className="mt-8 bg-gradient-to-br from-indigo-900 to-blue-900 p-5 rounded-[24px] flex flex-col items-center relative overflow-hidden shadow-[0_12px_32px_rgba(30,58,138,0.2)] border border-blue-800/50">
                     <div className="absolute -right-4 -top-4 opacity-10 text-white">
                       <QrCode className="w-32 h-32" />
                     </div>
                     
-                    <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-4 flex items-center">
+                    <span className="text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-4 flex items-center">
                       Pagar com PIX
                     </span>
                     
                     <div className="text-center mb-4 z-10">
-                      <p className="text-xs text-zinc-300 font-medium">O código já inclui o valor exato de <b className="text-white">{formatPrice(totalAmount)}</b>.</p>
+                      <p className="text-xs text-blue-100/80 font-medium">O código já inclui o valor exato de <b className="text-white">{formatPrice(totalAmount)}</b>.</p>
                     </div>
 
                     <button 
                       onClick={handleCopyPix}
                       className={`w-full py-4 rounded-[16px] font-black text-sm flex items-center justify-center space-x-2 transition-all duration-300 z-10 ${
                         isCopied 
-                        ? 'bg-green-500 text-white shadow-[0_8px_20px_rgba(34,197,94,0.3)]' 
-                        : 'bg-white text-zinc-900 hover:scale-[1.02] active:scale-[0.98]'
+                        ? 'bg-[#25D366] text-white shadow-[0_8px_20px_rgba(37,211,102,0.3)] border border-[#25D366]' 
+                        : 'bg-white/10 backdrop-blur-md text-white hover:bg-white/20 active:scale-[0.98] border border-white/20 shadow-inner'
                       }`}
                     >
                       {isCopied ? <Check className="w-4 h-4" strokeWidth={3} /> : <Copy className="w-4 h-4" strokeWidth={2.5} />}
                       <span>{isCopied ? 'PIX Copiado!' : 'Copiar PIX Copia e Cola'}</span>
                     </button>
                     
-                    <div className="mt-4 text-[10px] text-center text-zinc-500 font-mono tracking-widest z-10">
+                    <div className="mt-4 text-[10px] text-center text-blue-300/50 font-mono tracking-widest z-10">
                       CNPJ: 09.561.018/0001-37
                     </div>
                   </div>
@@ -450,11 +460,11 @@ export default function App() {
             </div>
             
             {/* Botão Flutuante de Fechamento via WhatsApp */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[#F5F3F0] via-[#F5F3F0] to-transparent pt-12">
+            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-slate-50 via-slate-50/90 to-transparent pt-12">
               <button 
                 onClick={handleWhatsAppOrder}
                 disabled={cartItems.length === 0}
-                className="w-full bg-[#25D366] text-white font-black text-[15px] py-4 rounded-[24px] flex items-center justify-center space-x-3 transition-transform shadow-[0_8px_30px_rgba(37,211,102,0.3)] active:scale-[0.98] disabled:opacity-50 disabled:shadow-none disabled:active:scale-100 disabled:cursor-not-allowed"
+                className="w-full bg-[#25D366] text-white font-black text-[15px] py-4 rounded-[24px] flex items-center justify-center space-x-3 transition-transform shadow-[0_12px_32px_rgba(37,211,102,0.25)] active:scale-[0.98] disabled:opacity-50 disabled:shadow-none disabled:active:scale-100 disabled:cursor-not-allowed border border-[#25D366]/50"
               >
                 <MessageCircle className="w-6 h-6" strokeWidth={2.5} />
                 <span>Enviar pelo WhatsApp</span>
